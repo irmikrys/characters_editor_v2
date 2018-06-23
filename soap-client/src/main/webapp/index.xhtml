@@ -17,37 +17,19 @@
 </h:head>
 <h:body>
 
+    <!--<h:outputScript library="javax.faces" name="jsf.js"/>-->
+    <!--<h:outputScript library="primefaces" name="push/push.js"/>-->
+
     <script type="text/javascript">
-        function handleUpdateRequest(message, channel, event) {
-            console.log('Msg about update: ' + message);
-
-            update_tree();
-
-            PF('updateMessages').renderMessage({
-                summary: 'Update',
-                detail: message,
-                severity: "info"
-            });
-        }
-
         function handleAjax() {
             var jsfCommandLink = document.getElementById("hidden");
             jsfCommandLink.click();
         }
     </script>
 
-    <f:websocket channel="pushChannel"
-                 onmessage="handleUpdateRequest"
-    />
-
-    <p:growl widgetVar="updateMessages" showDetail="true" life="2000"/>
-    <h:form>
-        <p:remoteCommand name="update_tree"
-                         actionListener="#{managerBean.update}"
-        />
-    </h:form>
-
-    <!--<h:outputScript library="javax.faces" name="jsf.js"/>-->
+    <f:websocket channel="pushChannel">
+        <f:ajax event="update" render="catalogForm"/>
+    </f:websocket>
 
     <h:commandButton style="display:none" id="hidden"
                      action="#{managerBean.updateElementPower}"
