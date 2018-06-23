@@ -1,0 +1,17 @@
+# Batch script to configure the security domains and define the database query used to authenticate users
+batch
+
+# Create JDBC datasource
+/subsystem=datasources/data-source=soa-game-DS:add(\
+    connection-url="jdbc:mysql://localhost:3306/soa_game?useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=true",\
+    jndi-name="java:jboss/datasources/soa-game-DS",\
+    driver-name=mysql,\
+    user-name="root",\
+    password="root"\
+)
+
+# Run the batch commands
+run-batch
+
+# Reload the server configuration
+reload

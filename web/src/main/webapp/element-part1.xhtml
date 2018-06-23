@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<h:head>
+    <title>Characters editor</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <ui:include src="templates/header.xhtml"/>
+
+    <div class="container-fluid">
+        <div class="row content">
+
+            <ui:include src="templates/menu.xhtml"/>
+
+            <div class="col-sm-9">
+
+                <h4>
+                    <h:outputText value="#{elementBean.mode.toUpperCase()}"
+                                  style="font-size: small;"
+                    />
+                </h4>
+                <h5>
+                    <span class="label label-success">
+                        #{elementBean.categoryTypeSet.elementType}
+                    </span>
+                </h5>
+                <hr/>
+
+                <h:outputText value="#{elementBean.successMessage}"
+                              styleClass="success-message"
+                              rendered="#{elementBean.errorMessage == null}"
+                />
+
+                <h:outputText value="#{elementBean.errorMessage}"
+                              styleClass="error-message"
+                              rendered="#{elementBean.errorMessage != null}"
+                />
+
+                <h:form id="element-form">
+
+                    <div class="form-group form-div">
+
+                        <h:outputLabel id="category-lbl"
+                                       for="category">
+                            Category:
+                        </h:outputLabel>
+                        <h:selectOneMenu id="category"
+                                         styleClass="form-control"
+                                         style="height: 35px;"
+                                         value="#{elementBean.selectedCategory}"
+                                         converter="#{categoryConverter}"
+                                         required="true"
+                                         requiredMessage="Category is required"
+                        >
+                            <f:selectItems value="#{elementBean.categories}"
+                                           var="category"
+                                           itemValue="#{category}"
+                                           itemLabel="#{category.name}"
+                            />
+                            <f:ajax listener="#{elementBean.categoryChanged}"
+                                    render="@all"/>
+                        </h:selectOneMenu><br/>
+                    </div>
+
+                </h:form>
+
+                <p:button id="params-btn"
+                          outcome="element-part2"
+                          value="Next">
+                    <f:param name="idElement" value="#{elementBean.element.idElement}"/>
+                    <f:param name="idCategory" value="#{elementBean.selectedCategory.idCategory}"/>
+                </p:button>
+
+            </div>
+        </div>
+    </div>
+
+    <ui:include src="templates/footer.xhtml"/>
+
+</h:body>
+</html>

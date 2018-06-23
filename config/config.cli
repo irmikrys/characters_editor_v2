@@ -1,0 +1,77 @@
+# Batch script to configure the security domain and define the database query used to authenticate users
+
+# Start batching commands
+batch
+
+# Add the JDBC security realm creation
+/subsystem=elytron/jdbc-realm=soa-jdbc-realm:add(\
+    principal-query=[\
+        {\
+            sql="SELECT password FROM users WHERE username = ?",\
+            data-source="soa-game-DS",\
+            simple-digest-mapper=\
+            {\
+                algorithm=simple-digest-sha-256,\
+                password-index=1\
+            }\
+        },\
+        {\
+            sql="SELECT r.rolename, 'Roles' FROM users u NATURAL JOIN userroles ur NATURAL JOIN roles r WHERE u.username = ?",\
+            data-source="soa-game-DS",\
+            attribute-mapping=[{index=1, to=roles}]\
+        }\
+    ]\
+)
+
+# Add a simple role decoder for the "roles" attribute mapping (if not already added!)
+/subsystem=elytron/simple-role-decoder=from-roles-attribute:add(\
+    attribute=roles\
+)
+
+# Configure the security domain
+/subsystem=elytron/security-domain=soa-security-domain:add(\
+    default-realm=soa-jdbc-realm,\
+    realms=[\
+        {\
+            realm=soa-jdbc-realm,\
+            role-decoder=from-roles-attribute\
+        }\
+    ],\
+    permission-mapper=default-permission-mapper\
+)
+
+# Configure the HTTP Authentication Factory
+/subsystem=elytron/http-authentication-factory=soa-http-auth:add(\
+    http-server-mechanism-factory=global,\
+    security-domain=soa-security-domain,\
+    mechanism-configurations=[\
+        {\
+            mechanism-name=BASIC,\
+            mechanism-realm-configurations=[\
+                {\
+                    realm-name=RealmUsersRoles\
+                }\
+            ]\
+        }\
+        {\
+            mechanism-name=FORM\
+        }\
+    ]\
+)
+
+# Configure Undertow's application security domain
+/subsystem=undertow/application-security-domain=soaApplicationDomain:add(\
+    http-authentication-factory=soa-http-auth\
+)
+
+# Configure the EJB3 Subsystem application security domain
+/subsystem=ejb3/application-security-domain=soaEJBApplicationDomain:add(\
+    security-domain=soa-security-domain\
+)
+
+# Run the batch commands
+run-batch
+
+# Reload the server configuration
+reload
+

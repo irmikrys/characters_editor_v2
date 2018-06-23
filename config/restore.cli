@@ -1,0 +1,44 @@
+# Batch script to restore the JBEAP configuration that was modified to run the quickstart
+
+# Start batching commands
+batch
+
+
+# Remove the EJB3 subsystem application security domain
+/subsystem=ejb3/application-security-domain=\
+    soaEJBApplicationDomain\
+    :remove()
+
+# Remove Undertow's application security domain
+/subsystem=undertow/application-security-domain=\
+    soaApplicationDomain\
+    :remove()
+
+# Remove the HTTP Authentication Factory
+/subsystem=elytron/http-authentication-factory=\
+    soa-http-auth\
+    :remove()
+
+# Remove the security domain
+/subsystem=elytron/security-domain=\
+    soa-security-domain\
+    :remove()
+
+# Remove a simple role decoder for the "roles" attribute mapping (if necessary!)
+#/subsystem=elytron/simple-role-decoder=\
+#    from-roles-attribute\
+#    :remove()
+
+# Remove the security realm
+/subsystem=elytron/jdbc-realm=\
+    soa-jdbc-realm\
+    :remove()
+
+
+# Run the batch commands
+run-batch
+
+# Reload the server configuration
+reload
+
+

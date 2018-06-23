@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+>
+    <script type="text/javascript">
+
+        function handleNewElementMessage(message, channel, event) {
+            console.log('Msg about new element: ' + message);
+
+            PF('fractionMessages').renderMessage({
+                summary: 'New element',
+                detail: message,
+                severity: "info"
+            });
+        }
+
+    </script>
+
+    <f:websocket channel="fractionChanel"
+                 user="#{sessionBean.getCurrentUserTypeSetId()}"
+                 onmessage="handleNewElementMessage"
+    />
+
+    <p:growl widgetVar="fractionMessages" showDetail="true" sticky="true"/>
+
+    <div class="jumbotron text-center">
+        <h2>Characters editor</h2>
+        <p>Add and edit your fantasy game elements!</p>
+    </div>
+
+</ui:composition>

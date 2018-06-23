@@ -1,0 +1,31 @@
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+dependencies {
+    compile name: 'ejb_main_ejb', ext: 'jar'
+
+    compile group: 'javax', name: 'javaee-api', version: '8.0'
+    compile group: 'org.jboss.spec.javax.annotation', name: 'jboss-annotations-api_1.2_spec', version:'1.0.2.Final'
+    compile group: 'org.jboss.spec.javax.servlet', name: 'jboss-servlet-api_3.1_spec', version:'1.0.2.Final'
+    compile group: 'org.jboss.spec.javax.ejb', name: 'jboss-ejb-api_3.2_spec', version:'1.0.1.Final'
+    compile group: 'org.wildfly.security', name: 'wildfly-elytron', version:'1.2.4.Final'
+    compile group: 'javax.enterprise', name: 'cdi-api', version: '2.0'
+
+    compile group: 'org.jboss.spec.javax.jms', name: 'jboss-jms-api_2.0_spec', version: '1.0.2.Final'
+
+//    compile group: 'com.sun.faces', name: 'jsf-api', version: '2.2.17'
+//    compile group: 'com.sun.faces', name: 'jsf-impl', version: '2.2.17'
+
+    compile group: 'org.primefaces', name: 'primefaces', version: '6.2'
+
+    compile group: 'javax.faces', name: 'javax.faces-api', version: '2.3'
+
+//    atmosphere (PrimeFaces Push) {add manually to web exploded facet} DEPRECATED
+//    compile group: 'org.atmosphere', name: 'atmosphere-runtime', version: '2.4.24'
+}

@@ -1,0 +1,13 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+
+    <div class="footer container-fluid">
+        Fraction:
+            <h:outputText value="#{sessionBean.userFromSession.typeSet.categoryType},
+                             #{sessionBean.userFromSession.typeSet.elementType}"
+            />
+    </div>
+
+</ui:composition>

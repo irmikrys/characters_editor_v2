@@ -1,0 +1,16 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
+
+    compile group: 'javax', name: 'javaee-api', version: '8.0'
+    compile group: 'org.jboss.spec.javax.annotation', name: 'jboss-annotations-api_1.3_spec', version: '1.0.1.Final'
+    compile group: 'org.jboss.spec.javax.ejb', name: 'jboss-ejb-api_3.2_spec', version: '1.0.1.Final'
+    compile group: 'org.jboss.ejb3', name: 'jboss-ejb3-ext-api', version:'2.2.0.Final'
+    compile group: 'javax.enterprise', name: 'cdi-api', version: '2.0'
+
+    compile group: 'org.jboss.spec.javax.jms', name: 'jboss-jms-api_2.0_spec', version: '1.0.2.Final'
+
+}

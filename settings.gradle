@@ -1,0 +1,7 @@
+rootProject.name = 'characters_editor'
+include 'web'
+include 'ejb'
+include 'rest'
+include 'soap-server'
+include 'soap-client'
+

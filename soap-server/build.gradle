@@ -1,0 +1,9 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.3.2.Final'
+
+    compile group: 'javax', name: 'javaee-api', version: '8.0'
+}

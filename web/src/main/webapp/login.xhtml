@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<h:head>
+    <title>Login page</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <form action="j_security_check"
+          method="post"
+          style="border: solid #cccccc 1px;
+                 border-radius: 5px;
+                 width: 330px;
+                 padding: 15px;
+                 background-color: white;
+                 margin: 15px auto;
+                 box-shadow: 3px 3px 4px #a8a8a8;"
+    >
+
+        <h3 style="text-align: center;"> Login form </h3>
+
+        <div class="form-group form-div">
+
+            <h:outputLabel id="name-lbl"
+                           for="j_username">
+                Name:
+            </h:outputLabel>
+            <h:inputText id="j_username"
+                         styleClass="form-control"
+                         a:placeholder="username..."/>
+            <br/>
+
+            <h:outputLabel id="pass-lbl"
+                           for="j_password">
+                Password:
+            </h:outputLabel>
+            <h:inputSecret id="j_password"
+                           styleClass="form-control"
+                           a:placeholder="password..."/>
+            <br/>
+
+        </div>
+
+        <h:commandButton id="login-btn"
+                         styleClass="btn btn-default"
+                         style="width: 100%;"
+                         value="Log in"/>
+
+    </form>
+
+</h:body>
+</html>

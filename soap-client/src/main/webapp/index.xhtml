@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<h:head>
+    <title>Characters editor</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <h:outputScript library="javax.faces" name="jsf.js"/>
+
+    <script type="text/javascript">
+        function handleAjax() {
+            var jsfCommandLink = document.getElementById("hidden");
+            jsfCommandLink.click();
+        }
+    </script>
+
+    <h:commandButton style="display:none" id="hidden"
+                     action="#{managerBean.updateElementPower}"
+    >
+        <f:ajax/>
+    </h:commandButton>
+
+    <ui:include src="templates/header.xhtml"/>
+
+    <p:growl id="msg" life="3000"/>
+    <p:commandButton value="Check messages"
+                     actionListener="#{managerBean.updateGrowlAction(null)}"
+                     update="msg"
+                     style="margin-left: 15px;"
+    />
+
+    <div class="container-fluid">
+        <div class="row content">
+
+            <div class="col-sm-3">
+
+                <hr/>
+                <h4>
+                    <span style="font-size: small;">INFORMATION</span>
+                </h4>
+                <hr/>
+                <h2>Current Characters</h2>
+                <h5><span class="label label-danger">Fantasy</span>
+                </h5>
+
+                <h:form id="catalogForm">
+                    <p:tree value="#{managerBean.root}" var="node">
+                        <p:treeNode>
+                            <h:outputText value="#{node}"/>
+                        </p:treeNode>
+                    </p:tree>
+                </h:form>
+
+            </div>
+
+            <div class="col-sm-9">
+
+                <hr/>
+                <h4>
+                    <span style="font-size: small;">CREATION</span>
+                </h4>
+                <hr/>
+
+                <h2>Add category</h2>
+                <h5><span class="label label-success">Category</span>
+                </h5>
+
+                <h:form id="category-form">
+
+                    <div class="form-group form-div">
+                        <h:outputLabel id="name-lbl"
+                                       for="name">
+                            Name:
+                        </h:outputLabel>
+                        <h:inputText id="name"
+                                     styleClass="form-control"
+                                     value="#{managerBean.categoryName}"
+                                     required="true"
+                                     requiredMessage="Name is required"
+                                     a:placeholder="name...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="name" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="quantity-lbl"
+                                       for="quantity">
+                            Size:
+                        </h:outputLabel>
+                        <h:inputText id="quantity"
+                                     styleClass="form-control"
+                                     value="#{managerBean.categorySize}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="size...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="quantity" styleClass="error-message"/>
+                    </div>
+
+                    <h:commandButton id="submit-category"
+                                     styleClass="btn btn-default"
+                                     value="Add category"
+                                     action="#{managerBean.addCategory}"
+                    >
+                    </h:commandButton>
+
+                </h:form>
+
+                <br/>
+
+                <hr/>
+
+                <h2>Add element</h2>
+                <h5><span class="label label-success">Element</span>
+                </h5>
+
+                <h:form id="element-form">
+
+                    <div class="form-group form-div">
+
+                        <h:outputLabel id="elem-category-lbl"
+                                       for="elem-category">
+                            Category id:
+                        </h:outputLabel>
+                        <h:inputText id="elem-category"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemIdCategory}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="id...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="elem-category" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="elem-name-lbl"
+                                       for="elem-name">
+                            Name:
+                        </h:outputLabel>
+                        <h:inputText id="elem-name"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemName}"
+                                     required="true"
+                                     requiredMessage="Name is required"
+                                     a:placeholder="name...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="elem-name" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="elem-quantity-lbl"
+                                       for="elem-quantity">
+                            Fortune:
+                        </h:outputLabel>
+                        <h:inputText id="elem-quantity"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemFortune}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="fortune...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="elem-quantity" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="propType-lbl"
+                                       for="propType">
+                            Property:
+                        </h:outputLabel>
+                        <h:inputText id="propType"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemProperty}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="property...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="propType" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="power-lbl"
+                                       for="power">
+                            Power:
+                        </h:outputLabel>
+                        <h:inputText id="power"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemPower}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="power...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="power" styleClass="error-message"/><br/>
+
+                        <h:commandButton id="submit-element"
+                                         styleClass="btn btn-default"
+                                         value="Add element"
+                                         action="#{managerBean.addElement}"
+                        >
+                        </h:commandButton>
+                    </div>
+
+                </h:form>
+
+                <br/>
+
+                <hr/>
+                <h4>
+                    <span style="font-size: small;">EDITION</span>
+                </h4>
+                <hr/>
+
+                <h2>Edit element's fortune</h2>
+                <h5><span class="label label-primary">Element</span>
+                </h5>
+
+                <h:form id="elem-edit-form">
+
+                    <div class="form-group form-div">
+                        <h:outputLabel id="elem-id-lbl"
+                                       for="elem-id">
+                            Element id:
+                        </h:outputLabel>
+                        <h:inputText id="elem-id"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemIdEdit}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="id...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="name" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="edit-elem-fortune-lbl"
+                                       for="edit-elem-fortune">
+                            New fortune:
+                        </h:outputLabel>
+                        <h:inputText id="edit-elem-fortune"
+                                     styleClass="form-control"
+                                     value="#{managerBean.elemFortuneEdit}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="fortune...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="edit-elem-fortune" styleClass="error-message"/>
+                    </div>
+
+                    <h:commandButton id="submit-edit-elem"
+                                     styleClass="btn btn-default"
+                                     value="Edit fortune"
+                                     action="#{managerBean.editElement}"
+                                     onclick="handleAjax()"
+                    >
+
+                    </h:commandButton>
+
+                </h:form>
+
+                <br/>
+
+            </div>
+
+        </div>
+    </div>
+
+    <ui:include src="templates/footer.xhtml"/>
+
+</h:body>
+</html>

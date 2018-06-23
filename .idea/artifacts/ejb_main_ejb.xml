@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" build-on-make="true" name="ejb_main:ejb">
+    <output-path>$PROJECT_DIR$/web/lib</output-path>
+    <root id="archive" name="ejb_main_ejb.jar">
+      <element id="artifact" artifact-name="ejb_main:ejb exploded" />
+    </root>
+  </artifact>
+</component>

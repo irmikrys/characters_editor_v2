@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<h:head>
+    <title>Characters editor</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <ui:include src="templates/header.xhtml"/>
+
+    <div class="container-fluid">
+        <div class="row content">
+
+            <ui:include src="templates/menu.xhtml"/>
+
+            <div class="col-sm-9">
+
+                <h4>
+                    <h:outputText value="#{categoryBean.mode.toUpperCase()}"
+                                  style="font-size: small;"
+                    />
+                </h4>
+                <h5>
+                    <span class="label label-danger">
+                        #{categoryBean.typeSet.categoryType}
+                    </span>
+                </h5>
+                <hr/>
+
+                <h:outputText value="#{categoryBean.successMessage}"
+                              styleClass="success-message"
+                              rendered="#{categoryBean.errorMessage == null}"
+                />
+
+                <h:outputText value="#{categoryBean.errorMessage}"
+                              styleClass="error-message"
+                              rendered="#{categoryBean.errorMessage != null}"
+                />
+
+                <h:form id="category-form">
+
+                    <div class="form-group form-div">
+                        <h:outputLabel id="name-lbl"
+                                       for="name">
+                            Name:
+                        </h:outputLabel>
+                        <h:inputText id="name"
+                                     styleClass="form-control"
+                                     value="#{categoryBean.name}"
+                                     required="true"
+                                     requiredMessage="Name is required"
+                                     a:placeholder="name...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="name" styleClass="error-message"/><br/>
+
+                        <h:outputLabel id="quantity-lbl"
+                                       for="quantity">
+                            #{categoryBean.typeSet.sizeType}
+                        </h:outputLabel>
+                        <h:inputText id="quantity"
+                                     styleClass="form-control"
+                                     value="#{categoryBean.value}"
+                                     required="true"
+                                     requiredMessage="Value is required"
+                                     converterMessage="You can enter digits only"
+                                     a:placeholder="#{categoryBean.typeSet.sizeType.toLowerCase()}...">
+                            <f:ajax/>
+                        </h:inputText>
+                        <h:message for="quantity" styleClass="error-message"/>
+                    </div>
+
+                    <h:commandButton id="submit-category"
+                                     styleClass="btn btn-default"
+                                     value="Submit"
+                                     action="#{categoryBean.submitCategory}"
+                    >
+                    </h:commandButton>
+
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+    <ui:include src="templates/footer.xhtml"/>
+
+</h:body>
+</html>

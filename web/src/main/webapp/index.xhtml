@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+
+<h:head>
+    <title>Characters editor</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+
+    <ui:include src="templates/header.xhtml"/>
+
+    <div class="container-fluid">
+        <div class="row content">
+
+            <ui:include src="templates/menu.xhtml"/>
+
+            <div class="col-sm-9">
+                <h4>
+                    <span style="font-size: small;">INFORMATION</span>
+                </h4>
+                <hr/>
+                <h2>Current Characters</h2>
+                <h5><span class="label label-danger">Fantasy</span>
+                </h5>
+
+                <br/>
+
+                <p:growl id="error-msg" life="3000"/>
+                <h:form id="catalogForm" style="width: 900px;">
+
+                    <p:treeTable value="#{catalogBean.root}" var="node">
+                        <f:facet name="header">
+                            Characters
+                        </f:facet>
+                        <p:column headerText="Name">
+                            <h:outputText value="#{node.name}"/>
+                        </p:column>
+                        <p:column headerText="Type" style="width: 100px">
+                            <h:outputText value="#{node.typeSetType}"/>
+                        </p:column>
+                        <p:column headerText="Id" style="width: 50px">
+                            <h:outputText value="#{node.id}"/>
+                        </p:column>
+                        <p:column headerText="Owner" style="width: 100px">
+                            <h:outputText value="#{node.owner}"/>
+                        </p:column>
+                        <p:column headerText="Properties" style="width: 250px">
+                            <h:outputText value="#{node.properties}"/>
+                        </p:column>
+                        <p:column style="width:50px">
+                            <p:commandButton icon="ui-icon-trash"
+                                             update="catalogForm error-msg best-elems"
+                            >
+
+                                <f:actionListener binding="#{catalogBean.deleteElement(node.type, node.id)}"/>
+                                <f:actionListener binding="#{catalogBean.updateGrowlAction(null)}"/>
+                                <f:actionListener binding="#{catalogBean.initDataView()}"/>
+                                <f:actionListener binding="#{catalogBean.initBestElementsList()}"/>
+
+                                <p:confirm icon="ui-icon-alert"
+                                           header="Delete"
+                                           message="Are you sure you want to delete #{node.name}?"
+                                />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width:50px">
+                            <p:button outcome="#{node.type.toLowerCase()}-part1"
+                                      icon="ui-icon-pencil">
+                                <f:param name="id#{node.type}" value="#{node.id}"/>
+                            </p:button>
+                        </p:column>
+                    </p:treeTable>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                                         icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                         icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </h:form>
+
+                <hr/>
+                <h2>Best equipped characters</h2>
+
+                <h:dataTable value="#{catalogBean.bestElements}"
+                             var="bestElems"
+                             style="width: 100%;"
+                             id="best-elems"
+                >
+                    <h:column>
+                        <h:form>
+                            <p:dataList value="#{bestElems}"
+                                        var="element"
+                                        type="ordered"
+                                        rendered="#{bestElems.size() > 0}"
+                            >
+                                <f:facet name="header">
+                                    #{bestElems.get(0).category.user.typeSet.elementFortune}
+                                    <span class="label label-success">
+                                #{bestElems.get(0).category.user.typeSet.elementType}
+                            </span>
+                                </f:facet>
+                                #{element.name}: #{element.fortune}
+                            </p:dataList>
+                        </h:form>
+                        <br/>
+                    </h:column>
+                </h:dataTable>
+
+                <hr/>
+            </div>
+        </div>
+    </div>
+
+    <ui:include src="templates/footer.xhtml"/>
+
+</h:body>
+</html>

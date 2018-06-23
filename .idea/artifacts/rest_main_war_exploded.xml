@@ -1,0 +1,42 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="rest_main:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/rest_main_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="rest_main" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.core:jersey-server:2.16" />
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.core:jersey-client:2.16" />
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.media:jersey-media-json-jackson:2.16" />
+          <element id="library" level="project" name="Gradle: org.jboss.ejb3:jboss-ejb3-ext-api:2.2.0.Final" />
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.media:jersey-media-jaxb:2.16" />
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.core:jersey-common:2.16" />
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.ext:jersey-entity-filtering:2.16" />
+          <element id="library" level="project" name="Gradle: javax.ws.rs:javax.ws.rs-api:2.0.1" />
+          <element id="library" level="project" name="Gradle: javax.annotation:javax.annotation-api:1.2" />
+          <element id="library" level="project" name="Gradle: org.glassfish.hk2:hk2-locator:2.4.0-b09" />
+          <element id="library" level="project" name="Gradle: org.glassfish.hk2:hk2-api:2.4.0-b09" />
+          <element id="library" level="project" name="Gradle: org.glassfish.hk2.external:javax.inject:2.4.0-b09" />
+          <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.3.2" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.3.2" />
+          <element id="library" level="project" name="Gradle: com.sun.mail:javax.mail:1.6.0" />
+          <element id="library" level="project" name="Gradle: org.glassfish.jersey.bundles.repackaged:jersey-guava:2.16" />
+          <element id="library" level="project" name="Gradle: org.glassfish.hk2:osgi-resource-locator:1.0.1" />
+          <element id="library" level="project" name="Gradle: org.glassfish.hk2:hk2-utils:2.4.0-b09" />
+          <element id="library" level="project" name="Gradle: org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b09" />
+          <element id="library" level="project" name="Gradle: org.javassist:javassist:3.18.1-GA" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.3.2" />
+          <element id="library" level="project" name="Gradle: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Gradle: javax.inject:javax.inject:1" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="rest_main/web/Web" />
+    </root>
+  </artifact>
+</component>
