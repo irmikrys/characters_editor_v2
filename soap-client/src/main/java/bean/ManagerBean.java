@@ -66,6 +66,7 @@ public class ManagerBean implements Serializable {
         try {
             editorService.addCategory(categoryName, categorySize);
             successMessage = "Category successfully added!";
+            errorMessage = null;
         } catch (Exception e) {
             errorMessage = MessagesUtility.getSimpleMessageFromException(e.getMessage());
             successMessage = null;
@@ -79,6 +80,7 @@ public class ManagerBean implements Serializable {
         try {
             editorService.addElement(elemIdCategory, elemName, elemFortune, elemProperty, elemPower);
             successMessage = "Element successfully added!";
+            errorMessage = null;
         } catch (Exception e) {
             errorMessage = MessagesUtility.getSimpleMessageFromException(e.getMessage());
             successMessage = null;
