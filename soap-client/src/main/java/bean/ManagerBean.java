@@ -29,7 +29,6 @@ public class ManagerBean implements Serializable {
     private EditorService editorService;
 
     private ArrayList<CategoryDTO> categories;
-    private ArrayList<CategoryDTO> categoriesForUser;
 
     private String categoryName;
     private Integer categorySize;
@@ -57,7 +56,6 @@ public class ManagerBean implements Serializable {
     public void init() {
         successMessage = null;
         errorMessage = null;
-        initCategories();
         initDataView();
         clearFields();
     }
@@ -72,7 +70,6 @@ public class ManagerBean implements Serializable {
             successMessage = null;
         }
         clearFields();
-        initCategories();
         initDataView();
     }
 
@@ -86,7 +83,6 @@ public class ManagerBean implements Serializable {
             successMessage = null;
         }
         clearFields();
-        initCategories();
         initDataView();
     }
 
@@ -99,7 +95,6 @@ public class ManagerBean implements Serializable {
             successMessage = null;
         }
         clearFields();
-        initCategories();
         initDataView();
     }
 
@@ -116,7 +111,6 @@ public class ManagerBean implements Serializable {
         }
         clearFields();
         elemIdEdit = null;
-        initCategories();
         initDataView();
     }
 
@@ -131,10 +125,9 @@ public class ManagerBean implements Serializable {
         }
     }
 
-    private void initCategories() {
-        System.out.println("Initializing categories...");
-        categories = new ArrayList<>(editorService.getAllCategories());
-        categoriesForUser = new ArrayList<>(editorService.getAllCategoriesForSoapUser());
+    public void update() {
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("catalogForm");
+        System.out.println("Rendering catalog...");
     }
 
     private void addMessage(String summary) {
@@ -144,8 +137,9 @@ public class ManagerBean implements Serializable {
 
     private void initDataView() {
         System.out.println("Initializing data view...");
+        categories = new ArrayList<>(editorService.getAllCategories());
         root = new DefaultTreeNode("Categories", null);
-        this.getCategories().forEach(categoryDTO -> {
+        categories.forEach(categoryDTO -> {
             Collection<ElementDTO> elements = null;
             if (categoryDTO.getElementDTOS().size() > 0) elements = categoryDTO.getElementDTOS();
             addNode(root,
@@ -187,14 +181,6 @@ public class ManagerBean implements Serializable {
 
     public void setCategories(ArrayList<CategoryDTO> categories) {
         this.categories = categories;
-    }
-
-    public ArrayList<CategoryDTO> getCategoriesForUser() {
-        return categoriesForUser;
-    }
-
-    public void setCategoriesForUser(ArrayList<CategoryDTO> categoriesForUser) {
-        this.categoriesForUser = categoriesForUser;
     }
 
     public String getCategoryName() {
@@ -288,4 +274,5 @@ public class ManagerBean implements Serializable {
     public TreeNode getRoot() {
         return root;
     }
+
 }

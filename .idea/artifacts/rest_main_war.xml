@@ -8,6 +8,10 @@
         <element id="directory" name="classes">
           <element id="module-output" name="rest_main" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Gradle: javax.faces:javax.faces-api:2.3" />
+          <element id="library" level="project" name="Gradle: org.primefaces:primefaces:6.2" />
+        </element>
       </element>
     </root>
   </artifact>
