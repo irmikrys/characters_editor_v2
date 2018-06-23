@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -36,9 +37,9 @@ public class CategoryDAO {
     public List<CategoryDTO> findAll() {
         TypedQuery<Category> query = em.createQuery(
                 "SELECT c FROM Category c ", Category.class);
-        List<Category> categories = query.getResultList();
         return new HashSet<>(query.getResultList())
                 .stream()
+                .sorted(Comparator.comparing(Category::getIdCategory))
                 .map(CategoryDTO::new)
                 .collect(Collectors.toList());
     }

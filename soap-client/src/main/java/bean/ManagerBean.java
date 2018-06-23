@@ -13,6 +13,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.push.Push;
+import javax.faces.push.PushContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,6 +48,10 @@ public class ManagerBean implements Serializable {
     private String successMessage;
     private String errorMessage;
     private TreeNode root;
+
+    @Inject
+    @Push(channel = "pushChannel")
+    private PushContext pushChannel;
 
     ManagerBean() {
         System.out.println("Manager bean constructor");

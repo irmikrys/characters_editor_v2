@@ -31,6 +31,14 @@ public class CategoryDTO {
                 .collect(Collectors.toList());
     }
 
+    public int getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
+    }
+
     public String getName() {
         return name;
     }
@@ -68,11 +76,4 @@ public class CategoryDTO {
         return String.format("\tCategoryDTO[%s, %d]", name, size);
     }
 
-    public int getIdCategory() {
-        return idCategory;
-    }
-
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
-    }
 }
