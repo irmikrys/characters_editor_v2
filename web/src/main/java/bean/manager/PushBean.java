@@ -1,7 +1,9 @@
 package bean.manager;
 
+import boundary.CharactersServiceRemote;
 import model.Category;
 import model.Element;
+import util.EJBUtility;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -11,6 +13,7 @@ import javax.faces.push.PushContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.*;
+import javax.naming.NamingException;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -42,15 +45,25 @@ public class PushBean implements Serializable, MessageListener {
     private LinkedList<LinkedList<Element>> bestElements;
     private LinkedList<Category> categories;
 
+    private CharactersServiceRemote charactersServiceRemote;
+
     //-------------------------------------------
 
     public PushBean() {
         System.out.println("Push bean constructor");
+        try {
+            charactersServiceRemote = EJBUtility.lookupCharactersService();
+        } catch (NamingException e) {
+            System.err.println("Couldn't lookup characters service in push bean");
+        }
     }
 
     @PostConstruct
     public void init() {
         System.out.println("Push bean post construct");
+
+        categories = charactersServiceRemote.getAllCategories();
+        bestElements = charactersServiceRemote.getBestElementsForTypeSets();
 
         try {
             Connection connection = connectionFactory.createConnection();

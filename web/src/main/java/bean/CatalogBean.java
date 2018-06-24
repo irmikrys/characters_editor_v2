@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 @Named(value = "catalogBean")
 @SessionScoped
@@ -46,6 +45,7 @@ public class CatalogBean implements Serializable {
 
     private TreeNode root;
     private LinkedList<LinkedList<Element>> bestElements;
+    private LinkedList<Category> categories;
     private String errorMessage;
 
     public CatalogBean() throws NamingException {
@@ -137,12 +137,15 @@ public class CatalogBean implements Serializable {
     public void initBestElementsList() {
         System.out.println("Initialization of best elements...");
         bestElements = new LinkedList<>();
-        bestElements = charactersServiceRemote.getBestElementsForTypeSets();
+//        bestElements = charactersServiceRemote.getBestElementsForTypeSets();
+        bestElements = pushBean.getBestElements();
     }
 
     public void initDataView() {
         root = new DefaultTreeNode("Characters", null);
-        this.getCategories().forEach(
+//        categories = charactersServiceRemote.getAllCategories();
+        categories = pushBean.getCategories();
+        categories.forEach(
                 c -> addNode(
                         root,
                         new TreeNodeData(
@@ -194,10 +197,6 @@ public class CatalogBean implements Serializable {
                 );
             }
         }
-    }
-
-    private List<Category> getCategories() {
-        return new LinkedList<>(charactersServiceRemote.getAllCategories());
     }
 
     public TreeNode getRoot() {
