@@ -13,9 +13,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.push.Push;
-import javax.faces.push.PushContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,10 +45,6 @@ public class ManagerBean implements Serializable {
     private String successMessage;
     private String errorMessage;
     private TreeNode root;
-
-    @Inject
-    @Push(channel = "pushChannel")
-    private PushContext pushChannel;
 
     ManagerBean() {
         System.out.println("Manager bean constructor");
@@ -97,6 +90,7 @@ public class ManagerBean implements Serializable {
         try {
             editorService.updateElementFortune(elemIdEdit, elemFortuneEdit);
             successMessage = "Element successfully updated!";
+            errorMessage = null;
         } catch (Exception e) {
             errorMessage = MessagesUtility.getSimpleMessageFromException(e.getMessage());
             successMessage = null;
@@ -112,6 +106,7 @@ public class ManagerBean implements Serializable {
             System.out.println("Trying to update power after 5 seconds...");
             editorService.updateElementPower(elemIdEdit);
             successMessage = "Element randomly updated!";
+            errorMessage = null;
         } catch (Exception e) {
             errorMessage = MessagesUtility.getSimpleMessageFromException(e.getMessage());
             successMessage = null;
@@ -119,6 +114,7 @@ public class ManagerBean implements Serializable {
         clearFields();
         elemIdEdit = null;
         initDataView();
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("catalogForm");
     }
 
     public void updateGrowlAction(ActionEvent actionEvent) {
@@ -133,6 +129,7 @@ public class ManagerBean implements Serializable {
     }
 
     public void update() {
+        initDataView();
         FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("catalogForm");
         System.out.println("Rendering catalog...");
     }
@@ -155,7 +152,6 @@ public class ManagerBean implements Serializable {
                     elements
             );
         });
-        pushChannel.send("update");
     }
 
     private void addNode(TreeNode parentNode, String data, Collection<ElementDTO> elements) {

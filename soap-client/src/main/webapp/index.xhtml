@@ -17,19 +17,12 @@
 </h:head>
 <h:body>
 
-    <!--<h:outputScript library="javax.faces" name="jsf.js"/>-->
-    <!--<h:outputScript library="primefaces" name="push/push.js"/>-->
-
     <script type="text/javascript">
         function handleAjax() {
             var jsfCommandLink = document.getElementById("hidden");
             jsfCommandLink.click();
         }
     </script>
-
-    <f:websocket channel="pushChannel">
-        <f:ajax event="update" render="catalogForm"/>
-    </f:websocket>
 
     <h:commandButton style="display:none" id="hidden"
                      action="#{managerBean.updateElementPower}"
