@@ -211,6 +211,14 @@ public class CatalogBean implements Serializable {
         this.bestElements = bestElements;
     }
 
+    public LinkedList<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(LinkedList<Category> categories) {
+        this.categories = categories;
+    }
+
     public String getErrorMessage() {
         return errorMessage;
     }
