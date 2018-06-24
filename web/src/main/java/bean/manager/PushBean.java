@@ -15,7 +15,8 @@ import javax.inject.Named;
 import javax.jms.*;
 import javax.naming.NamingException;
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @ApplicationScoped
@@ -42,8 +43,8 @@ public class PushBean implements Serializable, MessageListener {
     @Push(channel = "pushChannel")
     private PushContext pushChannel;
 
-    private LinkedList<LinkedList<Element>> bestElements;
-    private LinkedList<Category> categories;
+    private List<List<Element>> bestElements;
+    private List<Category> categories;
 
     private CharactersServiceRemote charactersServiceRemote;
 
@@ -62,8 +63,8 @@ public class PushBean implements Serializable, MessageListener {
     public void init() {
         System.out.println("Push bean post construct");
 
-        categories = charactersServiceRemote.getAllCategories();
-        bestElements = charactersServiceRemote.getBestElementsForTypeSets();
+        updateCategories();
+        updateElements();
 
         try {
             Connection connection = connectionFactory.createConnection();
@@ -85,6 +86,27 @@ public class PushBean implements Serializable, MessageListener {
             String messageContent = textMessage.getText();
 
             switch (messageContent) {
+                case "category-add":
+                    updateCategories();
+                    break;
+                case "category-update":
+                    updateCategories();
+                    break;
+                case "category-delete":
+                    updateCategories();
+                    updateElements();
+                    break;
+                case "element-add":
+                    updateCategories();
+                    updateElements();
+                    break;
+                case "element-update":
+                    updateCategories();
+                    break;
+                case "element-delete":
+                    updateCategories();
+                    updateElements();
+                    break;
                 default:
                     System.out.println("New element was added");
                     System.out.println(String.valueOf(textMessage.getObjectProperty("RECEIVER")));
@@ -98,15 +120,25 @@ public class PushBean implements Serializable, MessageListener {
         }
     }
 
+    private void updateCategories() {
+        categories = new ArrayList<>(charactersServiceRemote.getAllCategories());
+        pushChannel.send("categories");
+    }
+
+    private void updateElements() {
+        bestElements = new ArrayList<>(charactersServiceRemote.getBestElementsForTypeSets());
+        pushChannel.send("elements");
+    }
+
     public void dummyMethod() {
         System.out.println("Hello from dummy method!");
     }
 
-    public LinkedList<LinkedList<Element>> getBestElements() {
+    public List<List<Element>> getBestElements() {
         return bestElements;
     }
 
-    public LinkedList<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 }

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 @Named(value = "catalogBean")
 @SessionScoped
@@ -44,8 +45,8 @@ public class CatalogBean implements Serializable {
     private User userFromSession;
 
     private TreeNode root;
-    private LinkedList<LinkedList<Element>> bestElements;
-    private LinkedList<Category> categories;
+    private List<List<Element>> bestElements;
+    private List<Category> categories;
     private String errorMessage;
 
     public CatalogBean() throws NamingException {
@@ -142,6 +143,7 @@ public class CatalogBean implements Serializable {
     }
 
     public void initDataView() {
+        System.out.println("Initialization of data view...");
         root = new DefaultTreeNode("Characters", null);
 //        categories = charactersServiceRemote.getAllCategories();
         categories = pushBean.getCategories();
@@ -160,6 +162,14 @@ public class CatalogBean implements Serializable {
                         c.getUser().getTypeSet().getElementType(),
                         c.getUser().getUsername()
                 ));
+    }
+
+    public void updateData() {
+        System.out.println("Data update called remotely");
+        initDataView();
+        initBestElementsList();
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("catalogForm");
+        FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("bestElems");
     }
 
     public void updateGrowlAction(ActionEvent actionEvent) {
@@ -203,19 +213,19 @@ public class CatalogBean implements Serializable {
         return root;
     }
 
-    public LinkedList<LinkedList<Element>> getBestElements() {
+    public List<List<Element>> getBestElements() {
         return bestElements;
     }
 
-    public void setBestElements(LinkedList<LinkedList<Element>> bestElements) {
+    public void setBestElements(List<List<Element>> bestElements) {
         this.bestElements = bestElements;
     }
 
-    public LinkedList<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(LinkedList<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 

@@ -18,6 +18,10 @@
 
     <ui:include src="templates/header.xhtml"/>
 
+    <h:form id="push_form">
+        <p:remoteCommand name="update_data" actionListener="#{catalogBean.updateData}"/>
+    </h:form>
+
     <div class="container-fluid">
         <div class="row content">
 
@@ -58,13 +62,13 @@
                         </p:column>
                         <p:column style="width:50px">
                             <p:commandButton icon="ui-icon-trash"
-                                             update="catalogForm error-msg best-elems"
+                                             update="catalogForm error-msg bestElems"
                             >
 
                                 <f:actionListener binding="#{catalogBean.deleteElement(node.type, node.id)}"/>
                                 <f:actionListener binding="#{catalogBean.updateGrowlAction(null)}"/>
-                                <f:actionListener binding="#{catalogBean.initDataView()}"/>
-                                <f:actionListener binding="#{catalogBean.initBestElementsList()}"/>
+                                <!--<f:actionListener binding="#{catalogBean.initDataView()}"/>-->
+                                <!--<f:actionListener binding="#{catalogBean.initBestElementsList()}"/>-->
 
                                 <p:confirm icon="ui-icon-alert"
                                            header="Delete"
@@ -94,7 +98,7 @@
                 <h:dataTable value="#{catalogBean.bestElements}"
                              var="bestElems"
                              style="width: 100%;"
-                             id="best-elems"
+                             id="bestElems"
                 >
                     <h:column>
                         <h:form>

@@ -16,6 +16,27 @@
             });
         }
 
+        function handleModificationMessage(message, channel, event) {
+            console.log('Msg about modification: ' + message);
+
+            if (message === 'categories' || message === 'elements') {
+                console.log('update req from push');
+                try {
+                    update_data();
+                } catch (e) {
+                    console.error('no elements to update on this page')
+                }
+            } else {
+                console.error('unknown update request: \'' + message + '\'')
+            }
+
+            PF('modificationMessages').renderMessage({
+                summary: 'Modification',
+                detail: message,
+                severity: "info"
+            });
+        }
+
     </script>
 
     <f:websocket channel="fractionChannel"
@@ -24,11 +45,11 @@
     />
 
     <f:websocket channel="pushChannel"
-                 user="#{catalogBean.getCurrentUserTypeSetId()}"
-                 onmessage="handleNewElementMessage"
+                 onmessage="handleModificationMessage"
     />
 
     <p:growl widgetVar="fractionMessages" showDetail="true" sticky="true"/>
+    <p:growl widgetVar="modificationMessages" showDetail="true" sticky="true"/>
 
     <div class="jumbotron text-center">
         <h2>Characters editor</h2>
