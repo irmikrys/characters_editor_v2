@@ -17,6 +17,7 @@ import javax.naming.NamingException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Named
 @ApplicationScoped
@@ -121,11 +122,21 @@ public class PushBean implements Serializable, MessageListener {
     }
 
     private void updateCategories() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            System.err.println("Interrupted");
+        }
         categories = new ArrayList<>(charactersServiceRemote.getAllCategories());
         pushChannel.send("categories");
     }
 
     private void updateElements() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            System.err.println("Interrupted");
+        }
         bestElements = new ArrayList<>(charactersServiceRemote.getBestElementsForTypeSets());
         pushChannel.send("elements");
     }

@@ -23,6 +23,7 @@
                 console.log('update req from push');
                 try {
                     update_data();
+                    update_db();
                 } catch (e) {
                     console.error('no elements to update on this page')
                 }
@@ -50,6 +51,10 @@
 
     <p:growl widgetVar="fractionMessages" showDetail="true" sticky="true"/>
     <p:growl widgetVar="modificationMessages" showDetail="true" sticky="true"/>
+
+    <h:form id="push_data_form">
+        <p:remoteCommand name="update_db" actionListener="#{catalogBean.updateDB}"/>
+    </h:form>
 
     <div class="jumbotron text-center">
         <h2>Characters editor</h2>

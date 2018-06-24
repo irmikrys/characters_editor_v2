@@ -172,6 +172,11 @@ public class CatalogBean implements Serializable {
         FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("bestElems");
     }
 
+    public void updateDB() {
+        initDataView();
+        initBestElementsList();
+    }
+
     public void updateGrowlAction(ActionEvent actionEvent) {
         if (errorMessage != null && !errorMessage.isEmpty()) {
             addMessage(errorMessage);

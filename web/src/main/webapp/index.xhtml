@@ -22,6 +22,10 @@
         <p:remoteCommand name="update_data" actionListener="#{catalogBean.updateData}"/>
     </h:form>
 
+    <f:metadata>
+        <f:viewAction action="#{catalogBean.updateDB}" />
+    </f:metadata>
+
     <div class="container-fluid">
         <div class="row content">
 
