@@ -14,7 +14,8 @@ import model.User;
 import org.jboss.ejb3.annotation.SecurityDomain;
 
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RunAs;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
@@ -26,7 +27,8 @@ import java.util.List;
 
 @Stateless
 @SecurityDomain("soaEJBApplicationDomain")
-@RolesAllowed({"User"})
+@PermitAll
+@RunAs("User")
 @Remote(CharactersServiceRemote.class)
 public class CharactersService implements CharactersServiceRemote {
 
@@ -141,6 +143,7 @@ public class CharactersService implements CharactersServiceRemote {
                 );
         try {
             categoryDAO.add(new Category(name, size, userFromSession));
+            jmsService.sendMessageToAll("category-add");
         } catch (PersistenceException e) {
             throw new PersistenceException("Cannot add category");
         }
@@ -154,6 +157,7 @@ public class CharactersService implements CharactersServiceRemote {
         if (hasModificationRights(categoryToUpdate.getUser().getUsername())) {
             try {
                 categoryDAO.update(idCategory, name, size);
+                jmsService.sendMessageToAll("category-update");
             } catch (PersistenceException e) {
                 throw new PersistenceException("Cannot update category " + idCategory);
             }
@@ -170,6 +174,7 @@ public class CharactersService implements CharactersServiceRemote {
         if (hasModificationRights(category.getUser().getUsername())) {
             try {
                 categoryDAO.remove(id);
+                jmsService.sendMessageToAll("category-delete");
             } catch (PersistenceException e) {
                 throw new PersistenceException("Cannot remove category " + id);
             }
@@ -232,6 +237,7 @@ public class CharactersService implements CharactersServiceRemote {
                         "' from fraction '" + categoryChecked.getUser().getTypeSet().getCategoryType() +
                         "' added new element!";
                 jmsService.sendMessageToFraction(message, idTypeSet);
+                jmsService.sendMessageToAll("element-add");
             } catch (PersistenceException e) {
                 throw new PersistenceException("Cannot add element");
             }
@@ -262,6 +268,7 @@ public class CharactersService implements CharactersServiceRemote {
                     throw new AccessDeniedException("You cannot move element to someone else's category");
                 }
                 elementDAO.update(category, idElement, name, fortune, propType, power);
+                jmsService.sendMessageToAll("element-update");
             } catch (PersistenceException e) {
                 throw new PersistenceException("Cannot update element " + idElement);
             }
@@ -278,6 +285,7 @@ public class CharactersService implements CharactersServiceRemote {
         if (hasModificationRights(element.getCategory().getUser().getUsername())) {
             try {
                 elementDAO.remove(id);
+                jmsService.sendMessageToAll("element-delete");
             } catch (PersistenceException e) {
                 throw new PersistenceException("Cannot remove element " + id);
             }

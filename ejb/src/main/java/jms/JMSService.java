@@ -20,9 +20,6 @@ public class JMSService {
     @Resource(mappedName = "java:/jms/topic/soaFractionTopic")
     private Topic fractionTopic;
 
-    @Resource(mappedName = "java:/jms/queue/soaQueue")
-    private Queue queue;
-
     private Connection connection;
 
 
@@ -59,10 +56,6 @@ public class JMSService {
 
     public void sendMessageToFraction(String msg, Integer idFraction) {
         sendMessage(msg, fractionTopic, String.valueOf(idFraction));
-    }
-
-    public void sendMessageToUser(String msg, String username) {
-        sendMessage(msg, queue, username);
     }
 
 }
