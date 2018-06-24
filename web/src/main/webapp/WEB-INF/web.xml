@@ -36,6 +36,15 @@
         </auth-constraint>
     </security-constraint>
 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>public</web-resource-name>
+            <description>Matches a few special pages.</description>
+            <url-pattern>/another-session.xhtml</url-pattern>
+        </web-resource-collection>
+        <!-- No auth-constraint means everybody has access! -->
+    </security-constraint>
+
     <security-role>
         <role-name>User</role-name>
     </security-role>

@@ -104,7 +104,7 @@ public class CatalogBean implements Serializable {
         externalContext.getFlash().setKeepMessages(true);
 
         try {
-            externalContext.redirect("index.xhtml");
+            externalContext.redirect("another-session.xhtml");
             facesContext.getMessageList().forEach(
                     facesMessage -> System.out.println(facesMessage.getSummary())
             );
@@ -136,14 +136,12 @@ public class CatalogBean implements Serializable {
     }
 
     public void initBestElementsList() {
-        System.out.println("Initialization of best elements...");
         bestElements = new LinkedList<>();
 //        bestElements = charactersServiceRemote.getBestElementsForTypeSets();
         bestElements = pushBean.getBestElements();
     }
 
     public void initDataView() {
-        System.out.println("Initialization of data view...");
         root = new DefaultTreeNode("Characters", null);
 //        categories = charactersServiceRemote.getAllCategories();
         categories = pushBean.getCategories();
