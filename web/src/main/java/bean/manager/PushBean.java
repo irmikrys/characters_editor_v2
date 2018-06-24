@@ -33,14 +33,14 @@ public class PushBean implements Serializable, MessageListener {
     private Topic fractionTopic;
 
     @Inject
-    @Push(channel = "fractionChanel")
-    private PushContext fractionChanel;
+    @Push(channel = "fractionChannel")
+    private PushContext fractionChannel;
 
     //-------------------------------------------
 
     @Inject
-    @Push(channel = "pushChanel")
-    private PushContext pushChanel;
+    @Push(channel = "pushChannel")
+    private PushContext pushChannel;
 
     private LinkedList<LinkedList<Element>> bestElements;
     private LinkedList<Category> categories;
@@ -88,7 +88,7 @@ public class PushBean implements Serializable, MessageListener {
                 default:
                     System.out.println("New element was added");
                     System.out.println(String.valueOf(textMessage.getObjectProperty("RECEIVER")));
-                    fractionChanel.send(
+                    fractionChannel.send(
                             textMessage.getText(),
                             String.valueOf(textMessage.getObjectProperty("RECEIVER"))
                     );

@@ -18,7 +18,12 @@
 
     </script>
 
-    <f:websocket channel="fractionChanel"
+    <f:websocket channel="fractionChannel"
+                 user="#{catalogBean.getCurrentUserTypeSetId()}"
+                 onmessage="handleNewElementMessage"
+    />
+
+    <f:websocket channel="pushChannel"
                  user="#{catalogBean.getCurrentUserTypeSetId()}"
                  onmessage="handleNewElementMessage"
     />
