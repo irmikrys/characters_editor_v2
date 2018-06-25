@@ -104,7 +104,8 @@ public class CatalogBean implements Serializable {
         externalContext.getFlash().setKeepMessages(true);
 
         try {
-            externalContext.redirect("another-session.xhtml");
+            if(hasSession) externalContext.redirect("another-session.xhtml");
+            else externalContext.redirect("index.xhtml");
             facesContext.getMessageList().forEach(
                     facesMessage -> System.out.println(facesMessage.getSummary())
             );

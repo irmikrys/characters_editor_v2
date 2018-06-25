@@ -264,7 +264,8 @@ public class CharactersService implements CharactersServiceRemote {
                         category.getUser().getTypeSet().getIdTypeSet()) {
                     throw new WrongFractionException("Cannot move element to another fraction");
                 }
-                if (!loggedUser.getUsername().equals(category.getUser().getUsername())) {
+                if (!loggedUser.getUsername().equals(category.getUser().getUsername()) &&
+                        !sessionContext.isCallerInRole("Manager")) {
                     throw new AccessDeniedException("You cannot move element to someone else's category");
                 }
                 elementDAO.update(category, idElement, name, fortune, propType, power);
